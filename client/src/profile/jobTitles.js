@@ -1,0 +1,17 @@
+export const jobTitles = [
+  "RPA Developer",
+  "RPA Analyst",
+  "RPA Architect",
+  "RPA Consultant",
+  "RPA Project Manager",
+  "RPA Business Analyst",
+  "Intelligent Automation Developer",
+  "Intelligent Automation Engineer",
+  "Automation Consultant",
+  "Automation Architect",
+  "Process Automation Specialist",
+  "Automation Tester",
+  "Automation Lead",
+  "Automation Manager",
+  "Automation Engineer",
+];

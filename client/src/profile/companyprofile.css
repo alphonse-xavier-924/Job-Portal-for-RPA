@@ -1,0 +1,197 @@
+.company-profile {
+  max-width: 800px;
+  width: 90%;
+  margin: 50px auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.company-profile:hover {
+  transform: translateY(-3px);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.edit-button i {
+  margin-right: 5px;
+}
+
+.edit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.edit-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.profile-section {
+  margin-top: 20px;
+}
+
+.profile-section label {
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.profile-section p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.profile-section input,
+.profile-section textarea,
+.profile-section select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.profile-section input:focus,
+.profile-section textarea:focus,
+.profile-section select:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  outline: none;
+}
+
+.location-suggestions {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.location-suggestions li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.location-suggestions li:hover {
+  background-color: #f0f0f0;
+}
+
+.file-info {
+  font-size: 0.875em;
+  color: #555;
+  margin-top: 5px;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Error message styles */
+.profile-section .error {
+  color: #dc3545;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .company-profile {
+    padding: 20px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .company-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .edit-button,
+  .save-button,
+  .cancel-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

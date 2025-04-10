@@ -1,0 +1,204 @@
+/* Job Posting Container */
+.jobposting-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.jobposting-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.75em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* Input, Textarea, Select Styling */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1em;
+  color: #333;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Textarea specific styles */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Salary Range Styling */
+.salary-range {
+  display: flex;
+  gap: 15px;
+}
+
+.salary-range input {
+  flex: 1;
+  padding: 12px;
+}
+
+/* Skills Input & Button */
+.skills-input {
+  display: flex;
+  gap: 15px;
+}
+
+.skills-input input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.skills-input button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.skills-input button:hover {
+  background-color: #0056b3;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.skills-list li {
+  display: inline-block;
+  background-color: #f1f3f5;
+  padding: 8px 15px;
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+/* Error Message Styling */
+.error {
+  color: #d9534f;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
+/* Checkbox Group Styling */
+.form-group.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #007bff;
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  color: #555;
+}
+
+/* Submit Button Styling */
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Candidate Questions Section */
+.candidate-questions {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.candidate-questions .question-group {
+  margin-bottom: 18px;
+}
+
+.candidate-questions .question-group label {
+  font-weight: normal;
+  color: #555;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.candidate-questions input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #007bff;
+  margin-right: 12px;
+}
+
+.candidate-questions-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}

@@ -1,0 +1,56 @@
+/* Clean, working teal navbar */
+.navbar {
+  margin-bottom: 20px;
+  background-color: #008b8b !important; /* ensure teal shows up */
+  padding: 12px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.nav-item {
+  border: none;
+}
+
+.navbar-brand {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #f0db4f;
+  cursor: pointer;
+}
+
+.nav-link {
+  font-size: 1.1em;
+  color: #ffffff !important; /* override default styles */
+  margin: 0 12px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #f0db4f;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #f0db4f !important;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}

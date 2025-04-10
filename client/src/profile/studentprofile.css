@@ -1,0 +1,217 @@
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --text-dark: #1e293b;
+  --text-medium: #475569;
+  --border: #e2e8f0;
+  --bg-light: #f8fafc;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background-color: #f1f5f9;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text-dark);
+}
+
+.student-profile {
+  max-width: 1000px;
+  margin: 2.5rem auto;
+  padding: 3rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profile-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-dark);
+}
+
+.edit-button {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Section Styles */
+.profile-section {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.profile-section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.profile-section strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--text-medium);
+}
+
+.profile-section p,
+.profile-section li {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin: 0.25rem 0;
+}
+
+/* Experience & Education Boxes */
+.experience-item {
+  background: var(--bg-light);
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+}
+
+.experience-item p {
+  margin: 0.4rem 0;
+}
+
+/* Skill Tags */
+.skills-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.skill-item {
+  background: #e2e8f0;
+  color: var(--text-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Input/Field Groups */
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Buttons */
+button {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.add-button {
+  background: var(--success);
+  color: white;
+}
+
+.delete-button {
+  background: var(--danger);
+  color: white;
+}
+
+.cancel-button {
+  background: var(--text-medium);
+  color: white;
+}
+
+.save-button {
+  background: var(--primary);
+  color: white;
+}
+
+/* Button Grouping */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Multi-select dropdown fix */
+.basic-multi-select {
+  margin: 1rem 0;
+}
+
+.basic-multi-select .select__control {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .student-profile {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

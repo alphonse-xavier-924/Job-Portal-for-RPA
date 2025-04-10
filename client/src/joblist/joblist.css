@@ -1,0 +1,76 @@
+/* Sleek Job List Container */
+.joblist-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #fefefe;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.joblist-container h2 {
+  text-align: center;
+  color: #008b8b;
+  font-size: 2em;
+  margin-bottom: 30px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Job List Layout */
+.joblist {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Job Card Styles */
+.job-card {
+  border: none;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Job Title */
+.job-card h3 {
+  margin-top: 0;
+  color: #1e2a38;
+  font-size: 1.4em;
+  margin-bottom: 12px;
+}
+
+/* Job Details */
+.job-card p {
+  margin: 8px 0;
+  color: #444;
+  line-height: 1.6;
+  font-size: 1em;
+}
+
+/* Apply Button */
+.job-card button {
+  background-color: #008b8b;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1em;
+  margin-top: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.job-card button:hover {
+  background-color: #006b6b;
+  transform: scale(1.05);
+  cursor: pointer;
+}
