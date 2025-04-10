@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Corrected import
 import "./joblist.css";
 
 const Joblist = () => {
@@ -46,16 +46,25 @@ const Joblist = () => {
   }, []);
 
   const handleApply = async (jobId, companyId) => {
+    if (hasApplied(jobId)) {
+      console.log("You have already applied for this job.");
+      return;
+    }
+
     console.log("Applying to job:", jobId);
     console.log("Decoded companyId:", companyId);
 
     const token = localStorage.getItem("userToken");
     const candidateId = jwtDecode(token).candidate.id;
 
-    console.log("Decoded candidateId:", candidateId);
-
     const resume = "path/to/resume.pdf"; // Replace with actual resume path
     const coverLetter = "Cover letter content"; // Replace with actual cover letter content
+
+    // Optimistically update the state
+    setAppliedJobs((prevAppliedJobs) => [
+      ...prevAppliedJobs,
+      { jobId: { _id: jobId } }, // Add the applied job to the state
+    ]);
 
     try {
       const response = await fetch(
@@ -79,17 +88,32 @@ const Joblist = () => {
       const data = await response.json();
       if (response.ok) {
         console.log("Application submitted successfully:", data);
-        setAppliedJobs([...appliedJobs, { jobId }]); // Update applied jobs state
       } else {
         console.error("Failed to submit application:", data);
+
+        // Revert the optimistic update if the API call fails
+        setAppliedJobs((prevAppliedJobs) =>
+          prevAppliedJobs.filter(
+            (application) => application.jobId._id !== jobId
+          )
+        );
       }
     } catch (error) {
       console.error("Error submitting application:", error);
+
+      // Revert the optimistic update if an error occurs
+      setAppliedJobs((prevAppliedJobs) =>
+        prevAppliedJobs.filter((application) => application.jobId._id !== jobId)
+      );
     }
   };
 
   const hasApplied = (jobId) => {
-    return appliedJobs.some((application) => application.jobId === jobId);
+    console.log("Checking if applied for job:", jobId);
+    console.log("Applied jobs:", appliedJobs);
+
+    // Check if the jobId matches the _id property of the jobId object in appliedJobs
+    return appliedJobs.some((application) => application.jobId._id === jobId);
   };
 
   const formatDate = (dateString) => {
