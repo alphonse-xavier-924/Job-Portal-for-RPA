@@ -183,7 +183,8 @@ const CompanyProfile = () => {
     if (!validate()) return;
     try {
       const formData = new FormData();
-      formData.append("companyId", profile.companyId);
+      console.log("Form data before appending:", profile);
+      formData.append("companyId", profile.id);
       formData.append("location", profile.location);
       formData.append("about", profile.about);
       formData.append("numberOfEmployees", profile.numberOfEmployees);
@@ -250,7 +251,7 @@ const CompanyProfile = () => {
               name="companyName"
               value={profile.companyName}
               onChange={handleChange}
-              required
+              disabled
             />
             {errors.companyName && (
               <p className="error">{errors.companyName}</p>

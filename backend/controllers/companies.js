@@ -73,8 +73,9 @@ module.exports = {
     req.body = JSON.parse(JSON.stringify(req.body));
 
     try {
-
       const company = await Companies.findOne({ _id: req.body.companyId });
+      console.log("Company found", company);
+      console.log("Request body", req.body);
       if (!company) {
         return Responder.respondWithError(req, res, "Company not found");
       }
