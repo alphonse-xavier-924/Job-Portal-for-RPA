@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { Tooltip } from "react-tooltip";
 
 const SignupRecruiter = () => {
@@ -12,6 +12,8 @@ const SignupRecruiter = () => {
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const forbiddenDomains = ["gmail.com", "yahoo.com", "hotmail.com"];
 
@@ -103,12 +105,20 @@ const SignupRecruiter = () => {
               companyName,
               companyEmail,
               password,
+              contactPhone: "", // Empty field
+              contactEmail: "", // Empty field
+              numberOfEmployees: "", // Empty field
+              about: "", // Empty field
+              location: "", // Empty field
             }),
           }
         );
 
         if (response.ok) {
           setMessage("Signup successful.");
+          setTimeout(() => {
+            navigate("/login/recruiter"); // Redirect to login page
+          }, 2000); // Delay for 2 seconds to show the success message
         } else if (response.status === 404) {
           setMessage("Signup failed. Endpoint not found.");
         } else {

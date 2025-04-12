@@ -25,17 +25,14 @@ const CompanySchema = new Schema(
     token: { type: String },
     location: {
       type: String,
-      required: true,
       trim: true,
     },
     about: {
       type: String,
-      required: true,
       trim: true,
     },
     numberOfEmployees: {
       type: String,
-      required: true,
     },
     website: {
       type: String,
@@ -49,17 +46,14 @@ const CompanySchema = new Schema(
       type: String,
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
-      required: true,
       lowercase: true,
     },
     contactPhone: {
       type: String,
-      required: true,
       trim: true,
     },
     isActive: {
       type: Boolean,
-      required: true,
       default: true,
     },
   },
