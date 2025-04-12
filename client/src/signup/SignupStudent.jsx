@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./signup.css";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const SignupStudent = () => {
   // State variables
@@ -13,7 +12,6 @@ const SignupStudent = () => {
   const [rePassword, setRePassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
   const [message, setMessage] = useState("");
 
   // Navigate hook for navigation
@@ -73,15 +71,22 @@ const SignupStudent = () => {
     }
   };
 
-  // Handle CAPTCHA change
-  const handleCaptchaChange = (token) => {
-    setCaptchaToken(token);
+  // Check if all fields are valid
+  const isFormValid = () => {
+    return (
+      name.trim() !== "" &&
+      email.trim() !== "" &&
+      password.trim() !== "" &&
+      rePassword.trim() !== "" &&
+      !passwordError &&
+      !rePasswordError
+    );
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!passwordError && !rePasswordError && captchaToken) {
+    if (isFormValid()) {
       try {
         const response = await fetch(
           "http://localhost:4000/api/candidates/signup",
@@ -94,18 +99,13 @@ const SignupStudent = () => {
           }
         );
 
-        console.log("Response status:", response.status);
-        console.log("Response headers:", response.headers);
-
         if (!response.ok) {
           const errorData = await response.json();
-          console.log("Error data:", errorData);
           setMessage(
             `Failed to sign up. ${errorData.message || "Please try again."}`
           );
         } else {
           const data = await response.json();
-          console.log("Success data:", data);
           setMessage("Signup successful.");
           // Navigate to login page after 2 seconds
           setTimeout(() => {
@@ -121,7 +121,6 @@ const SignupStudent = () => {
         setEmail("");
         setPassword("");
         setRePassword("");
-        setCaptchaToken("");
       }
     }
   };
@@ -174,15 +173,10 @@ const SignupStudent = () => {
             onChange={handleRePasswordChange}
           />
           {rePasswordError && <p className="error">{rePasswordError}</p>}
-          <ReCAPTCHA
-            className="recaptcha"
-            sitekey="6LfBdNgqAAAAAO3zfiqAyKmkP4MWytgXIAD8Ivd-"
-            onChange={handleCaptchaChange}
-          />
           <button
             type="submit"
             className="btn btn-success"
-            disabled={passwordError || rePasswordError || !captchaToken}
+            disabled={!isFormValid()} // Disable button if form is invalid
           >
             Sign Up
           </button>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./signup.css";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const SignupRecruiter = () => {
   const [companyName, setCompanyName] = useState("");
@@ -12,7 +11,6 @@ const SignupRecruiter = () => {
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
   const [message, setMessage] = useState("");
 
   const forbiddenDomains = ["gmail.com", "yahoo.com", "hotmail.com"];
@@ -78,13 +76,21 @@ const SignupRecruiter = () => {
     }
   };
 
-  const handleCaptchaChange = (token) => {
-    setCaptchaToken(token);
+  const isFormValid = () => {
+    return (
+      companyName.trim() !== "" &&
+      companyEmail.trim() !== "" &&
+      password.trim() !== "" &&
+      rePassword.trim() !== "" &&
+      !error &&
+      !passwordError &&
+      !rePasswordError
+    );
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!error && !passwordError && !rePasswordError && captchaToken) {
+    if (isFormValid()) {
       try {
         const response = await fetch(
           "http://localhost:4000/api/companies/signup",
@@ -97,7 +103,6 @@ const SignupRecruiter = () => {
               companyName,
               companyEmail,
               password,
-              captchaToken,
             }),
           }
         );
@@ -168,17 +173,10 @@ const SignupRecruiter = () => {
             onChange={handleRePasswordChange}
           />
           {rePasswordError && <p className="error">{rePasswordError}</p>}
-          <ReCAPTCHA
-            className="recaptcha"
-            sitekey="6LfBdNgqAAAAAO3zfiqAyKmkP4MWytgXIAD8Ivd-"
-            onChange={handleCaptchaChange}
-          />
           <button
             type="submit"
             className="btn btn-success"
-            disabled={
-              error || passwordError || rePasswordError || !captchaToken
-            }
+            disabled={!isFormValid()} // Disable button if form is invalid
           >
             Sign Up
           </button>
