@@ -28,4 +28,9 @@ router.patch(
   jobApplicationsController.updateApplicationStatus
 );
 
+router.delete(
+  "/candidate/:candidateId/withdraw/:jobId",
+  jobApplicationsController.withdrawJobApplication
+);
+
 module.exports = router;

@@ -35,7 +35,9 @@ exports.getJobsByCandidateId = async (req, res) => {
   const { candidateId } = req.params;
 
   try {
-    const jobApplications = await JobApplications.find({ candidateId }).populate('companyId', 'companyName').populate('jobId', 'jobTitle');
+    const jobApplications = await JobApplications.find({ candidateId })
+      .populate("companyId", "companyName")
+      .populate("jobId", "jobTitle");
     res.status(200).json(jobApplications);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch job applications" });
@@ -46,7 +48,9 @@ exports.getApplicationsByJobId = async (req, res) => {
   const { jobId } = req.params;
 
   try {
-    const jobApplications = await JobApplications.find({ jobId }).populate('candidateId', 'name').populate('jobId', 'jobTitle');
+    const jobApplications = await JobApplications.find({ jobId })
+      .populate("candidateId", "name")
+      .populate("jobId", "jobTitle");
     res.status(200).json(jobApplications);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch job applications" });
@@ -71,5 +75,25 @@ exports.updateApplicationStatus = async (req, res) => {
     res.status(200).json(updatedApplication);
   } catch (error) {
     res.status(500).json({ error: "Failed to update job application status" });
+  }
+};
+
+exports.withdrawJobApplication = async (req, res) => {
+  const { candidateId, jobId } = req.params;
+
+  try {
+    // Find and delete the job application
+    const deletedApplication = await JobApplications.findOneAndDelete({
+      candidateId,
+      jobId,
+    });
+
+    if (!deletedApplication) {
+      return res.status(404).json({ error: "Job application not found" });
+    }
+
+    res.status(200).json({ message: "Application withdrawn successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to withdraw job application" });
   }
 };

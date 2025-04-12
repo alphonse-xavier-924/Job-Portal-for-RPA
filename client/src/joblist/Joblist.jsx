@@ -108,6 +108,40 @@ const Joblist = () => {
     }
   };
 
+  const handleWithdraw = async (jobId) => {
+    console.log("Withdrawing application for job:", jobId);
+
+    const token = localStorage.getItem("userToken");
+    const candidateId = jwtDecode(token).candidate.id;
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/job-applications/candidate/${candidateId}/withdraw/${jobId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("Application withdrawn successfully");
+        // Update the state to remove the withdrawn job
+        setAppliedJobs((prevAppliedJobs) =>
+          prevAppliedJobs.filter(
+            (application) => application.jobId._id !== jobId
+          )
+        );
+      } else {
+        const data = await response.json();
+        console.error("Failed to withdraw application:", data);
+      }
+    } catch (error) {
+      console.error("Error withdrawing application:", error);
+    }
+  };
+
   const hasApplied = (jobId) => {
     console.log("Checking if applied for job:", jobId);
     console.log("Applied jobs:", appliedJobs);
@@ -148,9 +182,17 @@ const Joblist = () => {
               <strong>Posted on:</strong> {formatDate(job.createdAt)}
             </p>
             {hasApplied(job._id) ? (
-              <button style={{ backgroundColor: "green" }}>
-                Already Applied
-              </button>
+              <div>
+                <button style={{ backgroundColor: "green" }}>
+                  Already Applied
+                </button>
+                <button
+                  style={{ backgroundColor: "red", marginLeft: "10px" }}
+                  onClick={() => handleWithdraw(job._id)}
+                >
+                  Withdraw
+                </button>
+              </div>
             ) : (
               <button onClick={() => handleApply(job._id, job.companyId)}>
                 Apply
