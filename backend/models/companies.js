@@ -69,11 +69,18 @@ const CompanySchema = new Schema(
 
 CompanySchema.post("save", async function (doc, next) {
   try {
-    await User.create({
+    let userExists = await User.findOne({
       email: doc.companyEmail,
-      password: doc.password,
-      role: "recruiter",
     });
+
+    if(!userExists) {
+      await User.create({
+        email: doc.companyEmail,
+        password: doc.password,
+        role: "recruiter",
+      });
+    }
+    
     next();
   } catch (error) {
     next(error);
