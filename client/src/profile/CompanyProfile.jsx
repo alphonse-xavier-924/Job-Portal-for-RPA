@@ -192,7 +192,7 @@ const CompanyProfile = () => {
       formData.append("contactEmail", profile.contactEmail);
       formData.append("contactPhone", profile.contactPhone);
       if (profile.logo) {
-        formData.append("logo", profile.logo);
+        formData.append("file", profile.logo);
       }
 
       // Log formData entries for debugging
@@ -212,6 +212,8 @@ const CompanyProfile = () => {
         const result = await response.json();
         console.log(result.message);
         setIsEditing(false);
+        window.alert("Profile updated successfully");
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Failed to update profile:", errorData.message);
@@ -226,13 +228,13 @@ const CompanyProfile = () => {
       <div className="profile-header">
         <h2>Company Profile</h2>
         <div className="header-actions">
-          {profile.logo && (
+          {/* {profile.logo && (
             <img
               src={URL.createObjectURL(profile.logo)}
               alt="Company Logo"
               className="company-logo"
             />
-          )}
+          )} */}
           <button
             className="edit-button"
             onClick={handleEditClick}
@@ -347,7 +349,14 @@ const CompanyProfile = () => {
             {errors.website && <p className="error">{errors.website}</p>}
           </div>
         ) : (
-          <p>{profile.website}</p>
+          <a
+            href={profile.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="view-resume-link"
+          >
+            {" "}{profile.website} 
+          </a>
         )}
       </div>
       <div className="profile-section">
@@ -362,9 +371,14 @@ const CompanyProfile = () => {
             <p className="file-info">Accepted file types: PNG, JPEG</p>
             {errors.logo && <p className="error">{errors.logo}</p>}
           </div>
-        ) : (
-          profile.logo && <p>{profile.logo.name}</p>
-        )}
+        ) : 
+         null
+        }
+         <img
+            src={profile.logo}
+            alt="Company Logo"
+            className="company-logo"
+          />
       </div>
       <div className="profile-section">
         <label>Contact Email:</label>

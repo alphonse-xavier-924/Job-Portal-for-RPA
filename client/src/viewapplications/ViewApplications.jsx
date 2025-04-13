@@ -8,6 +8,7 @@ const ViewApplications = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updateMessage, setUpdateMessage] = useState({});
+  const [ jobTitle, setJobTitle] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -30,7 +31,9 @@ const ViewApplications = () => {
         }
 
         const data = await response.json();
-        setApplications(data);
+        setApplications(data.applications);
+        setJobTitle(data.job.jobTitle);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -83,7 +86,7 @@ const ViewApplications = () => {
 
   return (
     <div className="applications-container">
-      <h1>Applications for Job ID: {jobId}</h1>
+      <h1>Applications for : { jobTitle }</h1>
       {applications.length === 0 ? (
         <p>No applications found.</p>
       ) : (
@@ -129,11 +132,11 @@ const ViewApplications = () => {
               <p>
                 <strong>Resume:</strong>{" "}
                 <a
-                  href={application.resume}
+                  href={application.candidateId.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View Resume
+                  Download {application.candidateId.name}'s Resume
                 </a>
               </p>
             </li>

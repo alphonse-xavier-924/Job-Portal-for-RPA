@@ -91,6 +91,7 @@ const StudentProfile = () => {
         jobTitle: profileData.currentJobTitle || "",
         currentJobTitle: profileData.currentJobTitle || "",
         certifications: profileData.certifications || "",
+        resume: profileData.resume || null,
         experience: Array.isArray(profileData.experience)
           ? profileData.experience.map((exp) => ({
               ...exp,
@@ -457,7 +458,7 @@ const StudentProfile = () => {
 
       <div className="profile-section">
         <label>Resume:</label>
-        {isEditing ? (
+        {isEditing && (
           <>
             <input
               type="file"
@@ -466,9 +467,23 @@ const StudentProfile = () => {
             />
             {errors.resume && <p className="error">{errors.resume}</p>}
           </>
-        ) : (
-          profile.resume && <p>{profile.resume.name}</p>
-        )}
+        ) }
+        {
+          profile.resume && <a
+          href={profile.resume}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="view-resume-link"
+          >
+          Download Resume
+          </a>
+        }
+        {/* <button
+          className="edit-button"
+          onClick={(e)=> {  }}
+        >
+          <i className="bi bi-file-earmark-pdf"></i> View Resume 
+        </button> */}
       </div>
 
       <div className="profile-section">
@@ -624,7 +639,14 @@ const StudentProfile = () => {
             onChange={handleChange}
           />
         ) : (
-          <p>{profile.certifications}</p>
+          <a
+          href={profile.certifications}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="view-resume-link"
+          >
+            {profile.certifications}
+          </a>
         )}
       </div>
 
@@ -656,9 +678,49 @@ const StudentProfile = () => {
           </>
         ) : (
           <div>
-            <p>GitHub: {profile.links?.github || ""}</p>
-            <p>Medium: {profile.links?.medium || ""}</p>
-            <p>Other: {profile.links?.other || ""}</p>
+            <p>GitHub:  
+              {/* {profile.links?.github || ""} */}
+              {
+                profile.links?.github && (
+                  <a
+                    href={profile.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="view-resume-link"
+                  >
+                    {" "}{profile.links.github}
+                  </a>
+                )
+              }
+              </p>
+            <p>Medium:  
+              {
+                profile.links?.medium && (
+                  <a
+                    href={profile.links.medium}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="view-resume-link"
+                  >
+                    {" "}{profile.links.medium}
+                  </a>
+                )
+              }
+            </p>
+            <p>Other: 
+              {
+                profile.links?.other && (
+                  <a
+                    href={profile.links.other}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="view-resume-link"
+                  >
+                   {" "} {profile.links.other}
+                  </a>
+                )
+              }
+            </p>
           </div>
         )}
       </div>
