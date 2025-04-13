@@ -1,9 +1,10 @@
-const JobApplications = require("../models/jobApplications");
 require("module-alias/register");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Responder = require("@service/responder");
 const multer = require("multer");
+const Jobs = require("@models/jobs");
+const JobApplications = require("@models/jobApplications");
 const upload = multer();
 
 exports.createJobApplication = async (req, res) => {
@@ -49,9 +50,11 @@ exports.getApplicationsByJobId = async (req, res) => {
 
   try {
     const jobApplications = await JobApplications.find({ jobId })
-      .populate("candidateId", "name")
-      .populate("jobId", "jobTitle");
-    res.status(200).json(jobApplications);
+      .populate("candidateId", "name resume");
+
+    const job = await Jobs.findOne({ _id: jobId });
+
+    res.status(200).json({ job, applications: jobApplications });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch job applications" });
   }
