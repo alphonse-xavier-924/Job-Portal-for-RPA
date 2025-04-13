@@ -83,6 +83,14 @@ body {
   margin: 0.25rem 0;
 }
 
+.view-resume-link{
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  padding-top: 2rem;
+  margin-top: 1rem;
+}
+
 /* Experience & Education Boxes */
 .experience-item {
   background: var(--bg-light);
