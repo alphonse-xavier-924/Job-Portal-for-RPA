@@ -5,11 +5,11 @@ const jobApplicationsController = require("../controllers/jobApplications");
 const Validation = require("../validations/jobapplications"); // Corrected path
 const Responder = require("@service/responder");
 const multer = require("multer");
-const upload = multer();
+const upload = multer({ dest: 'uploads/',  });
 
 router.post(
   "/create",
-  upload.none(),
+  upload.single('file'),
   Validation.createJobApplication(),
   Validation.validate, // Added validation middleware
   jobApplicationsController.createJobApplication.bind(jobApplicationsController)

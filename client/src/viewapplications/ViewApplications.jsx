@@ -139,6 +139,22 @@ const ViewApplications = () => {
                   Download {application.candidateId.name}'s Resume
                 </a>
               </p>
+              <p>
+                <strong>Cover Letter:</strong>{" "}
+                {
+                  application.coverLetter ? (
+                    <a
+                      href={application.coverLetter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Download {application.candidateId.name}'s Cover Letter
+                    </a>
+                  ) : "N/A"
+                }
+                
+              </p>
+
             </li>
           ))}
         </ul>
