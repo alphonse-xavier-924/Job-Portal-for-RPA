@@ -6,28 +6,45 @@ const multer = require("multer");
 const Jobs = require("@models/jobs");
 const JobApplications = require("@models/jobApplications");
 const upload = multer();
+const { uploadToBucket } = require("@config/aws-sdk");
+const COVERLETTER_FOLDER = "coverletters/";
+const { appendDateToFileName } = require('@service/commonFunc');
+
 
 exports.createJobApplication = async (req, res) => {
-  const { candidateId, jobId, companyId, resume, coverLetter } = req.body;
-
-  if (!candidateId || !jobId || !companyId) {
-    return res
-      .status(400)
-      .json({ error: "Candidate ID, Job ID, and Company ID are required" });
-  }
-
   try {
-    const newApplication = new JobApplications({
+    const { candidateId, jobId, companyId, resume } = req.body;
+
+    if (!candidateId || !jobId || !companyId) {
+      return res
+        .status(400)
+        .json({ error: "Candidate ID, Job ID, and Company ID are required" });
+    }
+
+    let application = {
       candidateId,
       jobId,
       companyId,
       status: "Pending",
       resume,
-    });
+    };
+
+    
+    if(req.file) {
+      let imgUploadRes = await uploadToBucket(req, `${COVERLETTER_FOLDER}${appendDateToFileName(req.file.originalname.split(".m")[0])}`);
+
+      if(!imgUploadRes.status){
+        return Responder.respondWithError(req, res, imgUploadRes.file);
+      }
+      application.coverLetter = imgUploadRes.file.Location;
+    }
+  
+    const newApplication = new JobApplications(application);
 
     const savedApplication = await newApplication.save();
     res.status(201).json(savedApplication);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Failed to create job application" });
   }
 };

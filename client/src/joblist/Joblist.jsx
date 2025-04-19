@@ -5,6 +5,14 @@ import "./joblist.css";
 const Joblist = () => {
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const [coverLetters, setCoverLetters] = useState({});
+
+
+
+  const handleCoverLetterChange = (e, jobId) => {
+    const file = e.target.files[0];
+    setCoverLetters((prev) => ({ ...prev, [jobId]: file }));
+  };
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -45,66 +53,110 @@ const Joblist = () => {
     fetchAppliedJobs();
   }, []);
 
+  // const handleApply = async (jobId, companyId) => {
+  //   if (hasApplied(jobId)) {
+  //     console.log("You have already applied for this job.");
+  //     return;
+  //   }
+
+  //   console.log("Applying to job:", jobId);
+  //   console.log("Decoded companyId:", companyId);
+
+  //   const token = localStorage.getItem("userToken");
+  //   const candidateId = jwtDecode(token).candidate.id;
+  //   const coverLetterFile = coverLetters[jobId];
+
+    
+
+  //   const resume = "path/to/resume.pdf"; // Replace with actual resume path
+  //   // const coverLetter = "Cover letter content"; // Replace with actual cover letter content
+
+  //   // Optimistically update the state
+  //   setAppliedJobs((prevAppliedJobs) => [
+  //     ...prevAppliedJobs,
+  //     { jobId: { _id: jobId } }, // Add the applied job to the state
+  //   ]);
+
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:4000/api/job-applications/create",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify({
+  //           candidateId,
+  //           jobId,
+  //           companyId,
+  //           resume,
+  //           coverLetter,
+  //         }),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       console.log("Application submitted successfully:", data);
+  //     } else {
+  //       console.error("Failed to submit application:", data);
+
+  //       // Revert the optimistic update if the API call fails
+  //       setAppliedJobs((prevAppliedJobs) =>
+  //         prevAppliedJobs.filter(
+  //           (application) => application.jobId._id !== jobId
+  //         )
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting application:", error);
+
+  //     // Revert the optimistic update if an error occurs
+  //     setAppliedJobs((prevAppliedJobs) =>
+  //       prevAppliedJobs.filter((application) => application.jobId._id !== jobId)
+  //     );
+  //   }
+  // };
+
   const handleApply = async (jobId, companyId) => {
-    if (hasApplied(jobId)) {
-      console.log("You have already applied for this job.");
-      return;
-    }
-
-    console.log("Applying to job:", jobId);
-    console.log("Decoded companyId:", companyId);
-
+    if (hasApplied(jobId)) return;
+    console.log("companyId:", companyId);
+  
     const token = localStorage.getItem("userToken");
     const candidateId = jwtDecode(token).candidate.id;
-
-    const resume = "path/to/resume.pdf"; // Replace with actual resume path
-    const coverLetter = "Cover letter content"; // Replace with actual cover letter content
-
-    // Optimistically update the state
-    setAppliedJobs((prevAppliedJobs) => [
-      ...prevAppliedJobs,
-      { jobId: { _id: jobId } }, // Add the applied job to the state
-    ]);
-
+    const coverLetterFile = coverLetters[jobId];
+  
+    const formData = new FormData();
+    formData.append("candidateId", candidateId);
+    formData.append("jobId", jobId);
+    formData.append("companyId", companyId._id);
+    formData.append("resume", "path/to/resume.pdf"); // Replace with actual resume logic
+    if (coverLetterFile) {
+      formData.append("file", coverLetterFile);
+    }
+  
+    setAppliedJobs((prev) => [...prev, { jobId: { _id: jobId } }]);
+  
     try {
-      const response = await fetch(
-        "http://localhost:4000/api/job-applications/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            candidateId,
-            jobId,
-            companyId,
-            resume,
-            coverLetter,
-          }),
-        }
-      );
-
+      const response = await fetch("http://localhost:4000/api/job-applications/create", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
       const data = await response.json();
-      if (response.ok) {
-        console.log("Application submitted successfully:", data);
+      if (!response.ok) {
+        console.error("Application error:", data);
+        setAppliedJobs((prev) => prev.filter((j) => j.jobId._id !== jobId));
       } else {
-        console.error("Failed to submit application:", data);
-
-        // Revert the optimistic update if the API call fails
-        setAppliedJobs((prevAppliedJobs) =>
-          prevAppliedJobs.filter(
-            (application) => application.jobId._id !== jobId
-          )
-        );
+        console.log("Applied successfully:", data);
       }
-    } catch (error) {
-      console.error("Error submitting application:", error);
-
-      // Revert the optimistic update if an error occurs
-      setAppliedJobs((prevAppliedJobs) =>
-        prevAppliedJobs.filter((application) => application.jobId._id !== jobId)
-      );
+    } catch (err) {
+      console.error("Error applying:", err);
+      setAppliedJobs((prev) => prev.filter((j) => j.jobId._id !== jobId));
     }
   };
 
@@ -194,9 +246,20 @@ const Joblist = () => {
                 </button>
               </div>
             ) : (
+              <div>
+                <p>
+                <strong>Upload Cover Leter: </strong> 
+                
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={(e) => handleCoverLetterChange(e, job._id)}
+                />
+                </p>
               <button onClick={() => handleApply(job._id, job.companyId)}>
                 Apply
               </button>
+              </div>
             )}
           </div>
         ))}

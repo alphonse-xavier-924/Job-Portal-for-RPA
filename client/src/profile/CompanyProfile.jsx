@@ -372,13 +372,13 @@ const CompanyProfile = () => {
             {errors.logo && <p className="error">{errors.logo}</p>}
           </div>
         ) : 
-         null
+        <img
+          src={profile.logo}
+          alt="Company Logo"
+          className="company-logo"
+        />
         }
-         <img
-            src={profile.logo}
-            alt="Company Logo"
-            className="company-logo"
-          />
+        
       </div>
       <div className="profile-section">
         <label>Contact Email:</label>

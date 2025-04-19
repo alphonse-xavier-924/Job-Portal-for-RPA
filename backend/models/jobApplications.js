@@ -30,6 +30,10 @@ const JobApplications = new Schema(
       type: String,
       required: false,
     },
+    coverLetter: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: {
