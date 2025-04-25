@@ -5,7 +5,7 @@ const candidateController = require("@controllers/candidates");
 const Validation = require("@validation");
 const Responder = require("@service/responder");
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/',  });
+const upload = multer({ dest: 'uploads/',  });//
 
 
 router.post(
