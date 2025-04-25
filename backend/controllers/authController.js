@@ -56,6 +56,7 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+//
 
 exports.resetPassword = async (req, res) => {
   console.log("Received token:", req.params.token);
