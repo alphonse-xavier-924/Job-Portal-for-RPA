@@ -22,7 +22,7 @@ const PastJobs = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:4000/api/jobs/company/${companyId}`,
+          `http://52.15.87.230:4000/api/jobs/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ const PastJobs = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/jobs/toggleStatus/${jobId}`,
+        `http://52.15.87.230:4000/api/jobs/toggleStatus/${jobId}`,
         {
           method: "PATCH",
           headers: {

@@ -65,10 +65,8 @@ const Jobposting = () => {
         const decodedToken = jwtDecode(token);
         const companyId = decodedToken.company.id;
 
-        console.log("Decoded companyId:", companyId);
-
         const response = await fetch(
-          "http://localhost:4000/api/jobs/post-job",
+          "http://52.15.87.230:4000/api/jobs/post-job",
           {
             method: "POST",
             headers: {
@@ -94,17 +92,14 @@ const Jobposting = () => {
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error("Error response:", errorText);
           alert("Failed to post job. Please try again.");
           return;
         }
 
         const result = await response.json();
-        console.log(result);
         alert("Job posted successfully!");
         navigate("/recruiter/pastjobs"); // Redirect to Jobs History page
       } catch (error) {
-        console.error("Error posting job:", error);
         alert("Failed to post job. Please try again.");
       }
     }

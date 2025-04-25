@@ -7,11 +7,9 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const { token } = useParams();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("Token from URL:", token); // Verify token capture
-  }, [token]);
+  useEffect(() => {}, [token]);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -27,10 +25,9 @@ const ResetPassword = () => {
       setMessage("Passwords do not match");
       return;
     }
-    console.log("Token:", token);
     try {
       const response = await fetch(
-        `http://localhost:4000/api/auth/reset-password/${token}`,
+        `http://52.15.87.230:4000/api/auth/reset-password/${token}`,
         {
           method: "PUT",
           headers: {
@@ -43,13 +40,12 @@ const ResetPassword = () => {
       if (response.ok) {
         setMessage("Password has been reset successfully.");
         setTimeout(() => {
-          navigate("/"); // Redirect to localhost:3000
-        }, 5000); // Wait for 3 seconds before redirecting
+          navigate("/");
+        }, 5000);
       } else {
         setMessage("Failed to reset password. Please try again.");
       }
     } catch (error) {
-      console.error("Error during password reset:", error);
       setMessage("Failed to reset password. Please try again.");
     }
   };

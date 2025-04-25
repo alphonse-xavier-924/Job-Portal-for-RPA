@@ -50,7 +50,6 @@ const StudentProfile = () => {
   const [originalProfile, setOriginalProfile] = useState(profile);
 
   useEffect(() => {
-   
     fetchProfile();
   }, []);
 
@@ -59,15 +58,12 @@ const StudentProfile = () => {
     const candidateId = jwtDecode(token)?.candidate?.id;
 
     if (!candidateId) {
-      console.error("Candidate ID not found in token.");
       return;
     }
 
-    console.log("Decoded candidateId:", candidateId);
-
     try {
       const response = await fetch(
-        `http://localhost:4000/api/candidates/${candidateId}`,
+        `http://52.15.87.230:4000/api/candidates/${candidateId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -80,17 +76,15 @@ const StudentProfile = () => {
       }
 
       const data = await response.json();
-      console.log("Fetched profile data:", data);
 
-      // Ensure data and message exist
       const profileData = data?.message || {};
-      console.log(profileData);
 
       const normalized = {
         ...profileData,
         jobTitle: profileData.currentJobTitle || "",
         currentJobTitle: profileData.currentJobTitle || "",
         certifications: profileData.certifications || "",
+        resume: profileData.resume || null,
         experience: Array.isArray(profileData.experience)
           ? profileData.experience.map((exp) => ({
               ...exp,
@@ -124,11 +118,8 @@ const StudentProfile = () => {
 
       setProfile(normalized);
       setOriginalProfile(normalized);
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
-    }
+    } catch (error) {}
   };
-
 
   const handleGenerateAbout = async () => {
     setIsGenerating(true); // Indicate that generation is in progress
@@ -152,13 +143,10 @@ const StudentProfile = () => {
       );
 
       const data = await response.json();
-      console.log("Generated data:", data);
-      console.log("Generated text:", data[0]?.generated_text);
       const generatedText =
         data[0]?.generated_text || "Failed to generate text.";
-      setProfile((prev) => ({ ...prev, about: generatedText })); // Replace the "about" section
+      setProfile((prev) => ({ ...prev, about: generatedText }));
     } catch (error) {
-      console.error("Generation failed:", error);
       alert("Failed to generate content. Please try again.");
     } finally {
       setIsGenerating(false); // Reset the generating state
@@ -290,8 +278,6 @@ const StudentProfile = () => {
       : alert("Invalid file type");
   };
 
-
-
   const validate = () => {
     const newErrors = {};
     (profile.experience || []).forEach((exp, i) => {
@@ -343,7 +329,7 @@ const StudentProfile = () => {
         formData.append(`otherSkills[${i}]`, skill)
       );
       const response = await fetch(
-        "http://localhost:4000/api/candidates/editProfile",
+        "http://52.15.87.230:4000/api/candidates/editProfile",
         {
           method: "POST",
           headers: {
@@ -359,9 +345,7 @@ const StudentProfile = () => {
         setIsEditing(false);
         fetchProfile();
       } else console.error("Save failed:", await response.json());
-    } catch (error) {
-      console.error("Save error:", error);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -457,7 +441,7 @@ const StudentProfile = () => {
 
       <div className="profile-section">
         <label>Resume:</label>
-        {isEditing ? (
+        {isEditing && (
           <>
             <input
               type="file"
@@ -466,9 +450,24 @@ const StudentProfile = () => {
             />
             {errors.resume && <p className="error">{errors.resume}</p>}
           </>
-        ) : (
-          profile.resume && <p>{profile.resume.name}</p>
         )}
+        <div className="resume-spacing"></div>
+        {profile.resume && (
+          <a
+            href={profile.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="view-resume-link"
+          >
+            Download Resume
+          </a>
+        )}
+        {/* <button
+          className="edit-button"
+          onClick={(e)=> {  }}
+        >
+          <i className="bi bi-file-earmark-pdf"></i> View Resume 
+        </button> */}
       </div>
 
       <div className="profile-section">
@@ -624,7 +623,14 @@ const StudentProfile = () => {
             onChange={handleChange}
           />
         ) : (
-          <p>{profile.certifications}</p>
+          <a
+            href={profile.certifications}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="view-resume-link"
+          >
+            {profile.certifications}
+          </a>
         )}
       </div>
 
@@ -656,9 +662,49 @@ const StudentProfile = () => {
           </>
         ) : (
           <div>
-            <p>GitHub: {profile.links?.github || ""}</p>
-            <p>Medium: {profile.links?.medium || ""}</p>
-            <p>Other: {profile.links?.other || ""}</p>
+            <p>
+              GitHub:
+              {/* {profile.links?.github || ""} */}
+              {profile.links?.github && (
+                <a
+                  href={profile.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="view-resume-link"
+                >
+                  {" "}
+                  {profile.links.github}
+                </a>
+              )}
+            </p>
+            <p>
+              Medium:
+              {profile.links?.medium && (
+                <a
+                  href={profile.links.medium}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="view-resume-link"
+                >
+                  {" "}
+                  {profile.links.medium}
+                </a>
+              )}
+            </p>
+            <p>
+              Other:
+              {profile.links?.other && (
+                <a
+                  href={profile.links.other}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="view-resume-link"
+                >
+                  {" "}
+                  {profile.links.other}
+                </a>
+              )}
+            </p>
           </div>
         )}
       </div>

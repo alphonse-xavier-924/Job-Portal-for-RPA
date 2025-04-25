@@ -1,22 +1,19 @@
-/* Reset the body styles */
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Styling for the Past Jobs Container */
 .past-jobs-container {
   padding: 30px;
   background-color: #f7f9fc;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 900px;
-  margin: 30px auto 0; /* Added margin-top to separate from the navbar */
-  z-index: 1; /* Make sure it's above other elements */
+  margin: 30px auto 0;
+  z-index: 1;
 }
 
-/* Loading/Error text styles */
 .past-jobs-container .loading,
 .past-jobs-container .error {
   text-align: center;
@@ -25,7 +22,6 @@ body {
   color: #555;
 }
 
-/* Past jobs list styling */
 .past-jobs-container ul {
   list-style-type: none;
   padding: 0;
@@ -46,7 +42,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Button styles */
 .past-jobs-container .toggle-status-btn,
 .past-jobs-container .view-applications-btn {
   margin-right: 15px;
@@ -83,7 +78,6 @@ body {
   background-color: #006b6b;
 }
 
-/* Sleek Job List Container (Unchanged) */
 .joblist-container {
   max-width: 1000px;
   margin: 40px auto;
@@ -93,7 +87,6 @@ body {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Styling */
 .joblist-container h2 {
   text-align: center;
   color: #008b8b;
@@ -103,14 +96,12 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Job List Layout */
 .joblist-container .joblist {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Job Card Styles */
 .joblist-container .job-card {
   border: none;
   background-color: #ffffff;
@@ -125,7 +116,6 @@ body {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* Job Title */
 .joblist-container .job-card h3 {
   margin-top: 0;
   color: #1e2a38;
@@ -133,7 +123,6 @@ body {
   margin-bottom: 12px;
 }
 
-/* Job Details */
 .joblist-container .job-card p {
   margin: 8px 0;
   color: #444;
@@ -141,7 +130,6 @@ body {
   font-size: 1em;
 }
 
-/* Apply Button */
 .joblist-container .job-card button {
   background-color: #008b8b;
   color: #ffffff;

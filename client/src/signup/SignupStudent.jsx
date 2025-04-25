@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
 const SignupStudent = () => {
-  // State variables
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,16 +13,13 @@ const SignupStudent = () => {
   const [rePasswordError, setRePasswordError] = useState("");
   const [message, setMessage] = useState("");
 
-  // Navigate hook for navigation
   const navigate = useNavigate();
 
-  // Handle email change
   const handleEmailChange = (e) => {
     const emailValue = e.target.value;
     setEmail(emailValue);
   };
 
-  // Validate password
   const validatePassword = (password) => {
     const minLength = 8;
     const hasNumber = /\d/;
@@ -40,7 +36,6 @@ const SignupStudent = () => {
     }
   };
 
-  // Handle password change
   const handlePasswordChange = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
@@ -59,7 +54,6 @@ const SignupStudent = () => {
     }
   };
 
-  // Handle re-entered password change
   const handleRePasswordChange = (e) => {
     const rePasswordValue = e.target.value;
     setRePassword(rePasswordValue);
@@ -71,7 +65,6 @@ const SignupStudent = () => {
     }
   };
 
-  // Check if all fields are valid
   const isFormValid = () => {
     return (
       name.trim() !== "" &&
@@ -83,13 +76,12 @@ const SignupStudent = () => {
     );
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isFormValid()) {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/candidates/signup",
+          "http://52.15.87.230:4000/api/candidates/signup",
           {
             method: "POST",
             headers: {
@@ -107,16 +99,13 @@ const SignupStudent = () => {
         } else {
           const data = await response.json();
           setMessage("Signup successful.");
-          // Navigate to login page after 2 seconds
           setTimeout(() => {
             navigate("/login/professional");
           }, 2000);
         }
       } catch (error) {
-        console.error("Error during signup:", error);
         setMessage("Failed to sign up. Please try again.");
       } finally {
-        // Clear form fields
         setName("");
         setEmail("");
         setPassword("");
@@ -176,7 +165,7 @@ const SignupStudent = () => {
           <button
             type="submit"
             className="btn btn-success"
-            disabled={!isFormValid()} // Disable button if form is invalid
+            disabled={!isFormValid()}
           >
             Sign Up
           </button>

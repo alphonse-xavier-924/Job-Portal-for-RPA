@@ -15,14 +15,13 @@ const HomePage = () => {
       const token = localStorage.getItem("userToken");
       const decodedToken = jwtDecode(token);
 
-      console.log("role", auth.role);
 
       try {
         let response;
         if (auth.role === "recruiter") {
           const companyId = decodedToken.company.id;
           response = await fetch(
-            `http://localhost:4000/api/companies/${companyId}`,
+            `http://52.15.87.230:4000/api/companies/${companyId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -32,7 +31,7 @@ const HomePage = () => {
         } else if (auth.role === "candidate") {
           const candidateId = decodedToken.candidate.id;
           response = await fetch(
-            `http://localhost:4000/api/candidates/${candidateId}`,
+            `http://52.15.87.230:4000/api/candidates/${candidateId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -53,10 +52,8 @@ const HomePage = () => {
 
         if (auth.role === "recruiter") {
           setData(result.message.companyName);
-          console.log("result", result.message.companyName);
         } else {
           setData(result.message.name);
-          console.log("result", result.message.name);
         }
       } catch (error) {
         setError(error.message);

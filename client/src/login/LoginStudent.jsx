@@ -11,12 +11,10 @@ const LoginStudent = () => {
 
   const navigate = useNavigate();
 
-  // Handle email change and validate email format
   const handleEmailChange = (e) => {
     const emailValue = e.target.value;
     setEmail(emailValue);
 
-    // Simple email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(emailValue)) {
       setEmailError("Please enter a valid email address.");
@@ -25,19 +23,17 @@ const LoginStudent = () => {
     }
   };
 
-  // Handle password change
   const handlePasswordChange = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!emailError && email && password) {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/candidates/login",
+          "http://52.15.87.230:4000/api/candidates/login",
           {
             method: "POST",
             headers: {
@@ -49,15 +45,11 @@ const LoginStudent = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Login response data:", data); // Log the response data
           setMessage("Login successful.");
-          // Save user session (e.g., token) in localStorage or cookies
-          const token = data.message.token; // Access the token correctly
+          const token = data.message.token;
           localStorage.setItem("userToken", token);
-          localStorage.setItem("userRole", "candidate"); // Set the role
-          localStorage.setItem("keepLoggedIn", JSON.stringify(true)); // Set the keepLoggedIn flag
-          console.log("Token stored in localStorage:", token); // Log the token
-          // Navigate to profile page
+          localStorage.setItem("userRole", "candidate");
+          localStorage.setItem("keepLoggedIn", JSON.stringify(true));
           navigate("/home");
           window.location.reload();
         } else {
@@ -67,7 +59,6 @@ const LoginStudent = () => {
           );
         }
       } catch (error) {
-        console.error("Error during login:", error);
         setMessage("Failed to login. Please try again.");
       }
     }

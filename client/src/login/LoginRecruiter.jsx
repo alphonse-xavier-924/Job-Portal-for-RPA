@@ -37,7 +37,7 @@ const LoginRecruiter = () => {
     if (!emailError && email && password) {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/companies/login",
+          "http://52.15.87.230:4000/api/companies/login",
           {
             method: "POST",
             headers: {
@@ -49,15 +49,11 @@ const LoginRecruiter = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Login response data:", data); // Log the response data
           setMessage("Login successful.");
-          // Save user session (e.g., token) in localStorage or cookies
-          const token = data.message.token; // Access the token correctly
+          const token = data.message.token;
           localStorage.setItem("userToken", token);
-          localStorage.setItem("userRole", "recruiter"); // Set the role
-          localStorage.setItem("keepLoggedIn", JSON.stringify(true)); // Set the keepLoggedIn flag
-          console.log("Token stored in localStorage:", token); // Log the token
-          // Navigate to profile page
+          localStorage.setItem("userRole", "recruiter");
+          localStorage.setItem("keepLoggedIn", JSON.stringify(true));
           navigate("/home");
           window.location.reload();
         } else {
@@ -67,7 +63,6 @@ const LoginRecruiter = () => {
           );
         }
       } catch (error) {
-        console.error("Error during login:", error);
         setMessage("Failed to login. Please try again.");
       }
     }
@@ -110,6 +105,12 @@ const LoginRecruiter = () => {
           <p>Don't have an account?</p>
           <Link to="/signup/recruiter" className="btn btn-primary">
             Sign Up
+          </Link>
+        </div>
+        <div className="login">
+          <p>Forgot your password?</p>
+          <Link to="/forgot-password" className="btn btn-primary">
+            Reset Password
           </Link>
         </div>
       </form>

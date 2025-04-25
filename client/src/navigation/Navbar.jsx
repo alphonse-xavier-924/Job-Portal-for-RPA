@@ -10,7 +10,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     logout();
-    window.location.href = "http://localhost:3000";
+    window.location.href = "http://52.15.87.230:3000";
   };
 
   return (
