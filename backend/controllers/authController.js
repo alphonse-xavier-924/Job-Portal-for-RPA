@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const Candidates = require("../models/candidates");
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../utils/sendEmail");//
 
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
