@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 const Responder = require("@service/responder");
 const multer = require("multer");
 const upload = multer();
+const { uploadToBucket } = require("@config/aws-sdk");
+const LOGO_FOLDER = "logos/";
+const { appendDateToFileName } = require("@service/commonFunc");
 
 module.exports = {
   async signup(req, res) {
@@ -37,7 +40,6 @@ module.exports = {
 
       Responder.respondWithSuccess(req, res, "Signup successful", { token });
     } catch (err) {
-      console.log("Error in company signup", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -45,7 +47,7 @@ module.exports = {
   async login(req, res) {
     try {
       const { email, password } = req.body;
-      const company = await Companies.findOne({ companyEmail: email }); // Fixed field name
+      const company = await Companies.findOne({ companyEmail: email });
 
       if (!company) {
         return Responder.respondWithError(req, res, "Invalid credentials");
@@ -64,7 +66,6 @@ module.exports = {
 
       Responder.respondWithSuccess(req, res, "Login successful", { token });
     } catch (err) {
-      console.log("Error in recruiters login", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -74,53 +75,39 @@ module.exports = {
 
     try {
       const company = await Companies.findOne({ _id: req.body.companyId });
-      console.log("Company found", company);
-      console.log("Request body", req.body);
       if (!company) {
         return Responder.respondWithError(req, res, "Company not found");
       }
 
-      // Check if the new contactEmail is already used by another company
-      if (
-        req.body.contactEmail &&
-        req.body.contactEmail !== company.contactEmail
-      ) {
-        const existingCompany = await Companies.findOne({
-          contactEmail: req.body.contactEmail,
-        });
-        if (existingCompany) {
-          return Responder.respondWithError(
-            req,
-            res,
-            "Email already in use by another company"
-          );
+      if (req.file) {
+        let imgUploadRes = await uploadToBucket(
+          req,
+          `${LOGO_FOLDER}${appendDateToFileName(
+            req.file.originalname.split(".m")[0]
+          )}`
+        );
+
+        if (!imgUploadRes.status) {
+          return Responder.respondWithError(req, res, imgUploadRes.file);
         }
+
+        company.logo = imgUploadRes.file.Location;
       }
 
-      // Use `findOneAndUpdate()` to ensure only an update occurs
-      const updatedCompany = await Companies.findOneAndUpdate(
-        { _id: req.body.companyId },
-        {
-          $set: {
-            location: req.body.location || company.location,
-            about: req.body.about || company.about,
-            numberOfEmployees:
-              req.body.numberOfEmployees || company.numberOfEmployees,
-            website: req.body.website || company.website,
-            contactPhone: req.body.contactPhone || company.contactPhone,
-            contactEmail: req.body.contactEmail || company.contactEmail,
-          },
-        },
-        { new: true } // Return the updated document
-      );
-
-      if (!updatedCompany) {
-        return Responder.respondWithError(req, res, "Failed to update profile");
+      company.location = req.body.location || company.location;
+      company.about = req.body.about || company.about;
+      company.numberOfEmployees =
+        req.body.numberOfEmployees || company.numberOfEmployees;
+      company.website = req.body.website || company.website;
+      company.contactPhone = req.body.contactPhone || company.contactPhone;
+      if (req.body.contactEmail != company.contactEmail) {
+        company.contactEmail = req.body.contactEmail;
       }
+
+      await company.save();
 
       Responder.respondWithSuccess(req, res, "Profile updated successfully");
     } catch (err) {
-      console.log("Error in company edit profile", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -139,7 +126,6 @@ module.exports = {
         company
       );
     } catch (err) {
-      console.error("Error in companies getCompanyById", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
