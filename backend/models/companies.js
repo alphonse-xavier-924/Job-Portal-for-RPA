@@ -74,6 +74,7 @@ CompanySchema.post("save", async function (doc, next) {
     });
 
     if (!userExists) {
+
       await User.create({
         email: doc.companyEmail,
         password: doc.password,

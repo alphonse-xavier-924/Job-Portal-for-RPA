@@ -6,6 +6,10 @@ const multer = require("multer");
 const Jobs = require("@models/jobs");
 const JobApplications = require("@models/jobApplications");
 const upload = multer();
+const { uploadToBucket } = require("@config/aws-sdk");
+const COVERLETTER_FOLDER = "coverletters/";
+const { appendDateToFileName } = require('@service/commonFunc');
+
 
 const { uploadToBucket } = require("@config/aws-sdk");
 const COVERLETTER_FOLDER = "coverletters/";
@@ -22,7 +26,7 @@ exports.createJobApplication = async (req, res) => {
 
         .json({ error: "Candidate ID, Job ID, and Company ID are required" });
     }
-
+    
     let application = {
       candidateId,
 
@@ -86,6 +90,7 @@ exports.getApplicationsByJobId = async (req, res) => {
       "candidateId",
       "name resume"
     );
+
 
     const job = await Jobs.findOne({ _id: jobId });
 

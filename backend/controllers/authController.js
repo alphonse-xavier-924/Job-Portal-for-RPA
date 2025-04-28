@@ -1,8 +1,10 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const User = require("../models/user");
+const User = require("../models/user")
+
 const Candidates = require("../models/Candidates");
 const sendEmail = require("../utils/sendEmail");
+
 
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -47,6 +49,7 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+//
 
 exports.resetPassword = async (req, res) => {
   const resetPasswordToken = crypto

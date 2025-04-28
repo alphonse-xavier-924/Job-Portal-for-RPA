@@ -51,6 +51,10 @@ const JobApplications = new Schema(
 
       required: false,
     },
+    coverLetter: {
+      type: String,
+      required: false,
+    },
   },
 
   {

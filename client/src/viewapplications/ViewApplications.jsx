@@ -33,6 +33,7 @@ const ViewApplications = () => {
         const data = await response.json();
         setApplications(data.applications);
         setJobTitle(data.job.jobTitle);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -85,6 +86,8 @@ const ViewApplications = () => {
 
   return (
     <div className="applications-container">
+
+
       {applications.length === 0 ? (
         <h1>No applications for this role yet...</h1>
       ) : (
@@ -153,6 +156,7 @@ const ViewApplications = () => {
                   "N/A"
                 )}
               </p>
+
             </li>
           ))}
         </ul>

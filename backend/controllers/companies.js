@@ -75,6 +75,8 @@ module.exports = {
 
     try {
       const company = await Companies.findOne({ _id: req.body.companyId });
+
+
       if (!company) {
         return Responder.respondWithError(req, res, "Company not found");
       }

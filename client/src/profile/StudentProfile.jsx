@@ -450,6 +450,7 @@ const StudentProfile = () => {
             />
             {errors.resume && <p className="error">{errors.resume}</p>}
           </>
+
         )}
         <div className="resume-spacing"></div>
         {profile.resume && (
@@ -462,6 +463,7 @@ const StudentProfile = () => {
             Download Resume
           </a>
         )}
+
         {/* <button
           className="edit-button"
           onClick={(e)=> {  }}
@@ -624,10 +626,12 @@ const StudentProfile = () => {
           />
         ) : (
           <a
+
             href={profile.certifications}
             target="_blank"
             rel="noopener noreferrer"
             className="view-resume-link"
+
           >
             {profile.certifications}
           </a>
@@ -704,6 +708,7 @@ const StudentProfile = () => {
                   {profile.links.other}
                 </a>
               )}
+
             </p>
           </div>
         )}

@@ -82,6 +82,7 @@ body {
   margin: 0.25rem 0;
 }
 
+
 .view-resume-link {
   color: var(--primary);
   text-decoration: none;
@@ -89,6 +90,8 @@ body {
   padding-top: 2rem;
   margin-top: 1rem;
 }
+
+
 
 .experience-item {
   background: var(--bg-light);

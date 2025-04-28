@@ -7,6 +7,7 @@ const Responder = require("@service/responder");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
+
 router.post(
   "/signup",
   Validation.signup(),

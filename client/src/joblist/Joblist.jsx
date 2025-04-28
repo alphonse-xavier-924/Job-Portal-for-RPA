@@ -6,7 +6,6 @@ const Joblist = () => {
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [coverLetters, setCoverLetters] = useState({});
-
   const handleCoverLetterChange = (e, jobId) => {
     const file = e.target.files[0];
 
@@ -86,6 +85,41 @@ const Joblist = () => {
         }
       );
 
+  //     // Revert the optimistic update if an error occurs
+  //     setAppliedJobs((prevAppliedJobs) =>
+  //       prevAppliedJobs.filter((application) => application.jobId._id !== jobId)
+  //     );
+  //   }
+  // };
+
+  const handleApply = async (jobId, companyId) => {
+    if (hasApplied(jobId)) return;
+    console.log("companyId:", companyId);
+  
+    const token = localStorage.getItem("userToken");
+    const candidateId = jwtDecode(token).candidate.id;
+    const coverLetterFile = coverLetters[jobId];
+  
+    const formData = new FormData();
+    formData.append("candidateId", candidateId);
+    formData.append("jobId", jobId);
+    formData.append("companyId", companyId._id);
+    formData.append("resume", "path/to/resume.pdf"); // Replace with actual resume logic
+    if (coverLetterFile) {
+      formData.append("file", coverLetterFile);
+    }
+  
+    setAppliedJobs((prev) => [...prev, { jobId: { _id: jobId } }]);
+  
+    try {
+      const response = await fetch("http://localhost:4000/api/job-applications/create", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
       const data = await response.json();
       if (response.ok) {
       } else {

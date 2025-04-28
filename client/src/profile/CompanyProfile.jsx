@@ -185,6 +185,7 @@ const CompanyProfile = () => {
       formData.append("contactPhone", profile.contactPhone);
       if (profile.logo) {
         formData.append("file", profile.logo);
+
       }
 
       const response = await fetch(
@@ -334,8 +335,9 @@ const CompanyProfile = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="view-resume-link"
-          >
+
             {profile.website}
+
           </a>
         )}
       </div>
@@ -362,6 +364,7 @@ const CompanyProfile = () => {
           className="company-logo"
         />
       </div> */}
+
       <div className="profile-section">
         <label>Contact Email:</label>
         {isEditing ? (
