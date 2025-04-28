@@ -57,7 +57,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* Section Styles */
 .profile-section {
   padding: 1.5rem 0;
   border-top: 1px solid var(--border);
@@ -83,7 +82,8 @@ body {
   margin: 0.25rem 0;
 }
 
-.view-resume-link{
+
+.view-resume-link {
   color: var(--primary);
   text-decoration: none;
   font-weight: 500;
@@ -91,7 +91,8 @@ body {
   margin-top: 1rem;
 }
 
-/* Experience & Education Boxes */
+
+
 .experience-item {
   background: var(--bg-light);
   padding: 1.25rem;
@@ -104,7 +105,6 @@ body {
   margin: 0.4rem 0;
 }
 
-/* Skill Tags */
 .skills-section {
   display: flex;
   flex-wrap: wrap;
@@ -121,7 +121,7 @@ body {
   font-weight: 500;
 }
 
-/* Input/Field Groups */
+
 .input-group {
   margin-bottom: 1.5rem;
 }
@@ -142,7 +142,7 @@ body {
   font-size: 1rem;
 }
 
-/* Buttons */
+
 button {
   padding: 0.75rem 1.25rem;
   border: none;
@@ -177,7 +177,6 @@ button:hover {
   color: white;
 }
 
-/* Button Grouping */
 .button-group {
   display: flex;
   gap: 1rem;
@@ -190,7 +189,6 @@ button:hover {
   gap: 1rem;
 }
 
-
 .item-actions {
   display: flex;
   flex-wrap: wrap;
@@ -199,7 +197,6 @@ button:hover {
   margin-top: 1rem;
 }
 
-/* Multi-select dropdown fix */
 .basic-multi-select {
   margin: 1rem 0;
 }
@@ -210,7 +207,6 @@ button:hover {
   padding: 0.25rem;
 }
 
-/* Responsive Layout */
 @media (max-width: 768px) {
   .student-profile {
     padding: 1.5rem;
@@ -222,4 +218,9 @@ button:hover {
     align-items: flex-start;
     gap: 1rem;
   }
+}
+
+
+.resume-spacing {
+  margin: 1rem 0;
 }

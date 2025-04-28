@@ -45,7 +45,10 @@ exports.createJob = async (req, res) => {
 
 exports.getActiveJobs = async (req, res) => {
   try {
-    const activeJobs = await Jobs.find({ isActive: true }).populate('companyId', 'companyName');
+    const activeJobs = await Jobs.find({ isActive: true }).populate(
+      "companyId",
+      "companyName"
+    );
     res.status(200).json(activeJobs);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -62,7 +65,6 @@ exports.getJobsByCompany = async (req, res) => {
   }
 };
 
-
 exports.toggleJobStatus = async (req, res) => {
   try {
     const { jobId } = req.params;
@@ -75,9 +77,10 @@ exports.toggleJobStatus = async (req, res) => {
     job.isActive = !job.isActive;
     await job.save();
 
-    res.status(200).json({ message: "Job status updated successfully", data: job });
+    res
+      .status(200)
+      .json({ message: "Job status updated successfully", data: job });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-  
 };

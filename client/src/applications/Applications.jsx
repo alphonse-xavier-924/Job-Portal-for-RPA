@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import "./applications.css";
 
 const Applications = () => {
@@ -12,7 +12,7 @@ const Applications = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:4000/api/job-applications/candidate/${candidateId}`,
+          `http://52.15.87.230:4000/api/job-applications/candidate/${candidateId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -20,10 +20,8 @@ const Applications = () => {
           }
         );
         const data = await response.json();
-        console.log("Fetched applied jobs:", data);
         setAppliedJobs(data);
       } catch (error) {
-        console.error("Error fetching applied jobs:", error);
       }
     };
 

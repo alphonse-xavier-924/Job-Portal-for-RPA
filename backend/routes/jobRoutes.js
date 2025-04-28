@@ -9,7 +9,7 @@ const upload = multer();
 
 router.post(
   "/post-job",
-  Validation.createJob(), // Add validation for creating a job
+  Validation.createJob(),
   Responder.validate.bind(Responder),
   jobsController.createJob.bind(jobsController)
 );

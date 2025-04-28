@@ -1,7 +1,7 @@
-/* Clean, working teal navbar */
+
 .navbar {
   margin-bottom: 20px;
-  background-color: #008b8b !important; /* ensure teal shows up */
+  background-color: #008b8b !important; 
   padding: 12px 24px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -28,7 +28,7 @@
 
 .nav-link {
   font-size: 1.1em;
-  color: #ffffff !important; /* override default styles */
+  color: #ffffff !important; 
   margin: 0 12px;
   font-weight: 500;
   position: relative;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./signup.css";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
 const SignupRecruiter = () => {
@@ -13,7 +13,7 @@ const SignupRecruiter = () => {
   const [rePasswordError, setRePasswordError] = useState("");
   const [message, setMessage] = useState("");
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const forbiddenDomains = ["gmail.com", "yahoo.com", "hotmail.com"];
 
@@ -95,7 +95,7 @@ const SignupRecruiter = () => {
     if (isFormValid()) {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/companies/signup",
+          "http://52.15.87.230:4000/api/companies/signup",
           {
             method: "POST",
             headers: {
@@ -105,11 +105,11 @@ const SignupRecruiter = () => {
               companyName,
               companyEmail,
               password,
-              contactPhone: "", // Empty field
-              contactEmail: "", // Empty field
-              numberOfEmployees: "", // Empty field
-              about: "", // Empty field
-              location: "", // Empty field
+              contactPhone: "", 
+              contactEmail: "",
+              numberOfEmployees: "", 
+              about: "", 
+              location: "", 
             }),
           }
         );
@@ -117,8 +117,8 @@ const SignupRecruiter = () => {
         if (response.ok) {
           setMessage("Signup successful.");
           setTimeout(() => {
-            navigate("/login/recruiter"); // Redirect to login page
-          }, 2000); // Delay for 2 seconds to show the success message
+            navigate("/login/recruiter");
+          }, 2000); 
         } else if (response.status === 404) {
           setMessage("Signup failed. Endpoint not found.");
         } else {
@@ -186,7 +186,7 @@ const SignupRecruiter = () => {
           <button
             type="submit"
             className="btn btn-success"
-            disabled={!isFormValid()} // Disable button if form is invalid
+            disabled={!isFormValid()} 
           >
             Sign Up
           </button>

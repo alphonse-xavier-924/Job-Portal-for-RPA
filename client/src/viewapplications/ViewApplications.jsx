@@ -8,7 +8,7 @@ const ViewApplications = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [updateMessage, setUpdateMessage] = useState({});
-  const [ jobTitle, setJobTitle] = useState("");
+  const [jobTitle, setJobTitle] = useState("");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -16,7 +16,7 @@ const ViewApplications = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:4000/api/job-applications/job/${jobId}`,
+          `http://52.15.87.230:4000/api/job-applications/job/${jobId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ const ViewApplications = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/api/job-applications/${applicationId}/status`,
+        `http://52.15.87.230:4000/api/job-applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -86,11 +86,13 @@ const ViewApplications = () => {
 
   return (
     <div className="applications-container">
-      <h1>Applications for : { jobTitle }</h1>
+
+
       {applications.length === 0 ? (
-        <p>No applications found.</p>
+        <h1>No applications for this role yet...</h1>
       ) : (
         <ul>
+          <h1>Applications for {jobTitle}</h1>
           {applications.map((application) => (
             <li key={application._id}>
               <p>
@@ -139,20 +141,20 @@ const ViewApplications = () => {
                   Download {application.candidateId.name}'s Resume
                 </a>
               </p>
+
               <p>
                 <strong>Cover Letter:</strong>{" "}
-                {
-                  application.coverLetter ? (
-                    <a
-                      href={application.coverLetter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Download {application.candidateId.name}'s Cover Letter
-                    </a>
-                  ) : "N/A"
-                }
-                
+                {application.coverLetter ? (
+                  <a
+                    href={application.coverLetter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download {application.candidateId.name}'s Cover Letter
+                  </a>
+                ) : (
+                  "N/A"
+                )}
               </p>
 
             </li>

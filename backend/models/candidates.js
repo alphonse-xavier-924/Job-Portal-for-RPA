@@ -39,7 +39,7 @@ const CandidatesSchema = new Schema(
         },
       },
     ],
-    resume: { type: String, trim: true },
+    resume: { type: String, uploadedAt: Date },
     certifications: { type: String },
     links: {
       github: { type: String, trim: true },
@@ -67,6 +67,5 @@ CandidatesSchema.post("save", async function (doc, next) {
   }
 });
 
-// Use mongoose.models to prevent overwriting the model
 module.exports =
   mongoose.models.Candidates || mongoose.model("Candidates", CandidatesSchema);

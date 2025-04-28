@@ -73,14 +73,15 @@ CompanySchema.post("save", async function (doc, next) {
       email: doc.companyEmail,
     });
 
-    if(!userExists) {
+    if (!userExists) {
+
       await User.create({
         email: doc.companyEmail,
         password: doc.password,
         role: "recruiter",
       });
     }
-    
+
     next();
   } catch (error) {
     next(error);

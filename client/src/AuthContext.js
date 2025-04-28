@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    // Check localStorage or cookies for user session
     const token = localStorage.getItem("userToken");
     const role = localStorage.getItem("userRole");
     if (token && role) {

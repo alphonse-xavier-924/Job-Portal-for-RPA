@@ -26,18 +26,14 @@ const CompanyProfile = () => {
     const fetchProfile = async () => {
       const token = localStorage.getItem("userToken");
       const companyId = jwtDecode(token)?.company?.id;
-      console.log("Decoded companyId:", companyId);
 
       if (!companyId) {
-        console.error("Company ID not found in token.");
         return;
       }
 
-      console.log("Decoded companyId:", companyId);
-
       try {
         const response = await fetch(
-          `http://localhost:4000/api/companies/${companyId}`,
+          `http://52.15.87.230:4000/api/companies/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,10 +48,7 @@ const CompanyProfile = () => {
         const data = await response.json();
         console.log("Fetched profile data:", data);
 
-        // Ensure data and message exist
         const profileData = data?.message || {};
-        console.log(profileData);
-
         const normalized = {
           ...profileData,
           companyId: profileData.companyId || "",
@@ -183,7 +176,6 @@ const CompanyProfile = () => {
     if (!validate()) return;
     try {
       const formData = new FormData();
-      console.log("Form data before appending:", profile);
       formData.append("companyId", profile.id);
       formData.append("location", profile.location);
       formData.append("about", profile.about);
@@ -193,15 +185,11 @@ const CompanyProfile = () => {
       formData.append("contactPhone", profile.contactPhone);
       if (profile.logo) {
         formData.append("file", profile.logo);
-      }
 
-      // Log formData entries for debugging
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
       }
 
       const response = await fetch(
-        "http://localhost:4000/api/companies/editProfile",
+        "http://52.15.87.230:4000/api/companies/editProfile",
         {
           method: "POST",
           body: formData,
@@ -228,13 +216,6 @@ const CompanyProfile = () => {
       <div className="profile-header">
         <h2>Company Profile</h2>
         <div className="header-actions">
-          {/* {profile.logo && (
-            <img
-              src={URL.createObjectURL(profile.logo)}
-              alt="Company Logo"
-              className="company-logo"
-            />
-          )} */}
           <button
             className="edit-button"
             onClick={handleEditClick}
@@ -354,32 +335,36 @@ const CompanyProfile = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="view-resume-link"
-          >
-            {" "}{profile.website} 
+
+            {profile.website}
+
           </a>
         )}
       </div>
-      <div className="profile-section">
+      {/* <div className="profile-section">
         <label>Logo:</label>
         {isEditing ? (
           <div>
             <input
               type="file"
               accept=".png,.jpg,.jpeg"
-              onChange={handleLogoChange}
+              onChange={handleLogoChange} // Ensure this is present
             />
             <p className="file-info">Accepted file types: PNG, JPEG</p>
             {errors.logo && <p className="error">{errors.logo}</p>}
           </div>
-        ) : 
+        ) : null}
         <img
-          src={profile.logo}
+          src={
+            profile.logo instanceof File
+              ? URL.createObjectURL(profile.logo)
+              : profile.logo?.key // Use the `key` property for the S3 URL
+          }
           alt="Company Logo"
           className="company-logo"
         />
-        }
-        
-      </div>
+      </div> */}
+
       <div className="profile-section">
         <label>Contact Email:</label>
         {isEditing ? (

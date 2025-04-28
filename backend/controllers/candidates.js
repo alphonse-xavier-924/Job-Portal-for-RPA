@@ -5,7 +5,7 @@ const Candidates = require("@models/Candidates");
 const Responder = require("@service/responder");
 const { uploadToBucket } = require("@config/aws-sdk");
 const RESUME_FOLDER = "resumes/";
-const { appendDateToFileName } = require('@service/commonFunc');
+const { appendDateToFileName } = require("@service/commonFunc");
 
 module.exports = {
   async signup(req, res) {
@@ -21,7 +21,6 @@ module.exports = {
 
       Responder.respondWithSuccess(req, res, "Candidate created successfully");
     } catch (err) {
-      console.log("Error in candidates signup", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -53,7 +52,6 @@ module.exports = {
 
       Responder.respondWithSuccess(req, res, "Login successful", { token });
     } catch (err) {
-      console.log("Error in candidates login", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -67,14 +65,21 @@ module.exports = {
         return Responder.respondWithError(req, res, "Candidate not found");
       }
 
-      if(req.file) {
-        let imgUploadRes = await uploadToBucket(req, `${RESUME_FOLDER}${appendDateToFileName(req.file.originalname.split(".m")[0])}`);
+      if (req.file) {
+        const key = `${RESUME_FOLDER}${appendDateToFileName(
+          req.file.originalname.split(".")[0]
+        )}`;
+        const imgUploadRes = await uploadToBucket(req, key);
 
-        if(!imgUploadRes.status){
+        if (!imgUploadRes.status) {
           return Responder.respondWithError(req, res, imgUploadRes.file);
         }
-        candidate.resume = imgUploadRes.file.Location;
+        candidate.resume = {
+          key: imgUploadRes.file.Location,
+          uploadedAt: new Date(),
+        };
       }
+
       candidate.currentJobTitle = req.body.currentJobTitle;
       candidate.location = req.body.location;
       candidate.about = req.body.about;
@@ -91,7 +96,6 @@ module.exports = {
 
       Responder.respondWithSuccess(req, res, "Candidate updated successfully");
     } catch (err) {
-      console.log("Error in candidates editProfile", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },
@@ -111,7 +115,6 @@ module.exports = {
         candidate
       );
     } catch (err) {
-      console.error("Error in candidates getCandidateById", err);
       Responder.respondWithError(req, res, "Server Error");
     }
   },

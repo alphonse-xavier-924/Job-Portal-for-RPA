@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:4000/api/auth/forgot-password",
+        "http://52.15.87.230:4000/api/auth/forgot-password",
         {
           method: "POST",
           headers: {
@@ -41,7 +41,6 @@ const ForgotPassword = () => {
         }, 5000);
       }
     } catch (error) {
-      console.error("Error during password reset:", error);
       setMessage("Failed to send password reset link. Please try again.");
     }
   };
